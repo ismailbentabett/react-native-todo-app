@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { FAB, TextInput, Box, Flex, Spacer } from "@react-native-material/core";
+import {
+  FAB,
+  TextInput,
+  Box,
+  Flex,
+  Spacer,
+  Surface,
+  AppBar,
+} from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { View } from "react-native";
 
@@ -7,7 +15,13 @@ const BottomBar = (handleText) => {
   const [text, setText] = useState("");
   return (
     <View>
-      <Box h={80} style={{ backgroundColor: "indigo" }}>
+      <TextInput
+        variant="outlined"
+        label="write a todo"
+        style={{ height: 40, margin: 20, position: "relative" }}
+        onChangeText={(newText) => setText(newText)}
+      />
+      <AppBar variant="bottom">
         <FAB
           icon={(props) => <Icon name="plus" {...props} />}
           style={{
@@ -19,12 +33,7 @@ const BottomBar = (handleText) => {
           }}
           onPress={() => handleText.handleText(text)}
         />
-        <TextInput
-          label="write a todo"
-          style={{ height: 40, margin: 20 }}
-          onChangeText={(newText) => setText(newText)}
-        />
-      </Box>
+      </AppBar>
     </View>
   );
 };

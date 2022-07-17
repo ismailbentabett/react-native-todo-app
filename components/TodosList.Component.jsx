@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ListItem } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { View } from "react-native";
 
-const App = (todos) => {
-  let todosTags = todos.todos.map((todo) => {
+const App = (props) => {
+  let [todosdata, settodosdata] = useState(props.todos);
+  useEffect(() => {
+    settodosdata(props.todos);
+  }, [props.todos]);
+  console.log(props);
+  const handleDelete = (id) => {
+    let newTodos = todosdata.filter((todo) => todo.id !== id);
+    settodosdata(newTodos);
+  };
+  let todosTags = todosdata.map((todo) => {
     return (
       <ListItem
         key={todo.id}
         title={todo.text}
         leading={<Icon name="check" size={24} />}
-        trailing={(props) => <Icon name="delete" {...props} />}
+        trailing={(props) => (
+          <Icon
+            name="delete"
+            {...props}
+            onPress={() => handleDelete(todo.id)}
+          />
+        )}
       />
     );
   });
